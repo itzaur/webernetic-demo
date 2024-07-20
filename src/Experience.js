@@ -51,6 +51,7 @@ export default class Experience {
 
     this.renderer.setSize(this.width, this.height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setClearColor('#E8EDFF');
   }
 
   createControls() {

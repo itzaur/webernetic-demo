@@ -3,11 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/css.gg@2.0.0/icons/css/arrow-top-right.css"
+      rel="stylesheet"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>webernetic-demo</title>
   </head>
   <body>
-    <div id="app"></div>
+    <main class="page">
+      <div class="page__content">
+        <h1 class="page__title">Демо-версия</h1>
+        <p class="page__subtitle">
+          За 18 лет деятельности было реализовано более 500 крупных, а также не
+          менее 2500 средних и малых проектов. Используя знания и накопленный
+          опыт, мы можем предложить...
+        </p>
+        <button class="btn" type="button">
+          <h3>Попробовать бесплатно</h3>
+          <div><i class="gg-arrow-top-right"></i></div>
+        </button>
+      </div>
+      <div class="page__webgl"></div>
+    </main>
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>
