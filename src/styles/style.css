@@ -1,6 +1,6 @@
 :root {
   --color-bg: #f0f4fc;
-  --color-webgl-bg: #7994f8;
+  --color-webgl-bg: rgb(121, 148, 248);
   --color-title: #1f4284;
   --color-subtitle: #727272;
   --color-btn-bg: #244c98;
@@ -184,6 +184,8 @@ select {
     width: 100%;
     height: 100%;
     overflow: hidden;
+
+    cursor: pointer;
   }
 }
 
