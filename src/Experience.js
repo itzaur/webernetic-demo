@@ -15,6 +15,8 @@ export default class Experience {
     this.height = container.offsetHeight;
     this.mouse = new THREE.Vector2();
 
+    this.root = null;
+
     this.resize = () => this.onResize();
     this.mousemove = (e) => this.onMousemove(e);
   }
@@ -54,15 +56,16 @@ export default class Experience {
   }
 
   createLights() {
-    this.directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    this.directionalLight = new THREE.DirectionalLight(0xffffff, 4);
     this.directionalLight.position.set(0.99, 7.05, 10);
     this.directionalLight.castShadow = true;
     this.directionalLight.shadow.camera.far = 25;
     this.directionalLight.shadow.camera.near = 1;
     this.directionalLight.shadow.mapSize.set(1024, 1024);
     this.directionalLight.shadow.normalBias = 0.05;
+    this.directionalLight.shadow.intensity = 0.3;
 
-    this.ambientLight = new THREE.AmbientLight(0xffffff, 1.6);
+    this.ambientLight = new THREE.AmbientLight(0xffffff, 0.84);
     this.ambientLight.position.set(-1, 1, 1);
 
     this.spotLight = new THREE.SpotLight(0xffffff);
@@ -155,9 +158,11 @@ export default class Experience {
         gltf.scene.castShadow = true;
         gltf.scene.receiveShadow = true;
 
+        this.root = gltf.scene;
+
         this.scene.add(gltf.scene);
 
-        const childrenArrayForChangeColor = [
+        const childrenArrayForChangeMetalness = [
           gltf.scene.children[0],
           gltf.scene.children[1],
           gltf.scene.children[2],
@@ -167,8 +172,23 @@ export default class Experience {
           gltf.scene.children[20],
         ];
 
-        childrenArrayForChangeColor.forEach(
+        const childrenArrayForChangeColor = [
+          gltf.scene.children[3],
+          gltf.scene.children[4],
+          gltf.scene.children[9],
+          gltf.scene.children[10],
+          gltf.scene.children[15],
+          gltf.scene.children[16],
+          gltf.scene.children[19],
+          gltf.scene.children[20],
+        ];
+
+        childrenArrayForChangeMetalness.forEach(
           (child) => (child.material.metalness = 0.2)
+        );
+
+        childrenArrayForChangeColor.forEach((child) =>
+          child.material.color.set(0.2, 0.3, 1)
         );
 
         gltf.scene.children[17].position.z = 3.69;
@@ -181,29 +201,12 @@ export default class Experience {
           .name('rotationY');
 
         this.gui
-          .add(gltf.scene.children[17].material.color, 'r')
-          .min(0)
-          .max(1)
-          .step(0.001)
-          .name('r');
-        this.gui
-          .add(gltf.scene.children[17].material.color, 'g')
-          .min(0)
-          .max(1)
-          .step(0.001)
-          .name('g');
-        this.gui
-          .add(gltf.scene.children[17].material.color, 'b')
-          .min(0)
-          .max(1)
-          .step(0.001)
-          .name('b');
-        this.gui
           .add(gltf.scene.children[17].material, 'metalness')
           .min(0)
           .max(1)
           .step(0.001)
           .name('metalness');
+
         this.gui
           .add(gltf.scene.children[17].material, 'roughness')
           .min(0)
@@ -245,7 +248,14 @@ export default class Experience {
   }
 
   render() {
+    const elapsedTime = this.clock.getElapsedTime();
     this.renderer.render(this.scene, this.camera);
+
+    if (this.root) {
+      this.root.children[4].rotation.z = elapsedTime * 0.5;
+      this.root.children[6].rotation.z = -elapsedTime * 0.5;
+      this.root.children[7].rotation.z = -elapsedTime * 0.5;
+    }
   }
 
   update() {
@@ -272,6 +282,7 @@ export default class Experience {
 
   addGUI() {
     this.gui = new dat.GUI();
+    this.gui.open(false);
     // this.gui.hide();
 
     this.gui
