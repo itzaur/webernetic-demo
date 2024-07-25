@@ -98,7 +98,7 @@ select {
         calc(100% - var(--padding-top) - var(--padding-left))
       );
 
-      font-size: clamp(1.5rem, 1vw, 1.8rem);
+      font-size: clamp(1.5rem, var(--font-size, 2vw), 1.8rem);
       font-weight: 400;
 
       padding: var(--padding-top) var(--padding-top) var(--padding-top)
@@ -426,6 +426,7 @@ select {
 
       .btn {
         --btn-width: 23rem;
+        --font-size: 1vw;
 
         gap: 0;
         margin-top: 0;

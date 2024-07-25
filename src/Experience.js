@@ -149,7 +149,7 @@ export default class Experience {
     gltfLoader.setDRACOLoader(dracoLoader);
 
     return new Promise((resolve) => {
-      gltfLoader.load('/src/models/model.glb', (gltf) => {
+      gltfLoader.load('./models/model.glb', (gltf) => {
         gltf.scene.scale.set(0.125, 0.125, 0.125);
         gltf.scene.position.set(0.438, -0.225, 0);
         gltf.scene.rotation.set(-0.334, 0.207, 0.207);
