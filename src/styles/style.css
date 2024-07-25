@@ -1,10 +1,15 @@
 :root {
   --color-bg: #f0f4fc;
-  --color-webgl-bg: rgb(121, 148, 248);
+  --color-webgl-bg: #7994f8;
   --color-title: #1f4284;
   --color-subtitle: #727272;
   --color-btn-bg: #244c98;
   --color-btn-title: #ffffff;
+  --color-input: #d7e2f6;
+  --color-checkbox: #323232;
+  --color-valid: #0b9b0b;
+  --color-focus: #0050fc;
+  --color-invalid: #b80606;
 
   --paddingBlock: 3.6rem;
   --paddingInline: 4rem;
@@ -69,7 +74,7 @@ select {
     --padding-left: 7.2rem;
     display: grid;
     place-content: center;
-    gap: 1.8rem;
+    gap: 2.4rem;
 
     padding-inline: var(--padding-left);
 
@@ -89,11 +94,11 @@ select {
       margin-top: 1.8rem;
 
       width: min(
-        37.7rem,
+        var(--btn-width, 37.7rem),
         calc(100% - var(--padding-top) - var(--padding-left))
       );
 
-      font-size: clamp(1.5rem, 3vw, 1.8rem);
+      font-size: clamp(1.5rem, 1vw, 1.8rem);
       font-weight: 400;
 
       padding: var(--padding-top) var(--padding-top) var(--padding-top)
@@ -168,14 +173,18 @@ select {
   }
 
   .page__title {
-    font-size: clamp(1.7rem, 3vw, 3rem);
+    font-size: clamp(1.7rem, 2.6vw, 3rem);
     font-weight: 500;
     color: var(--color-title);
   }
 
   .page__subtitle {
     width: min(49ch, 100%);
-    font-size: clamp(1.3rem, 3vw, 1.7rem);
+
+    font-size: clamp(1.3rem, 2vw, 1.7rem);
+    word-break: keep-all;
+    letter-spacing: 0.001em;
+    line-height: 1.5;
 
     color: var(--color-subtitle);
   }
@@ -186,6 +195,218 @@ select {
     overflow: hidden;
 
     cursor: pointer;
+  }
+
+  [popover] {
+    position: fixed;
+    inset: 0;
+
+    opacity: 0;
+    visibility: hidden;
+
+    width: fit-content;
+    height: fit-content;
+
+    margin: auto;
+
+    overflow: hidden;
+
+    transform: scale(0.98);
+
+    transition: 0.3s linear;
+
+    &:popover-open {
+      background-color: var(--color-bg);
+
+      opacity: 1;
+      visibility: visible;
+
+      transform: scale(1);
+
+      z-index: -1;
+    }
+  }
+
+  [popover]:popover-open::backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  .modal {
+    display: grid;
+
+    width: min(70%, 46.5rem);
+
+    padding: 2.4rem;
+
+    font-size: 2rem;
+
+    .modal__btn {
+      justify-self: end;
+
+      display: grid;
+      place-items: center;
+
+      width: 5.2rem;
+      aspect-ratio: 1;
+
+      background-color: var(--color-btn-title);
+
+      border-radius: 1rem;
+
+      cursor: pointer;
+    }
+
+    h3 {
+      font-size: 2.4rem;
+      letter-spacing: 0.05rem;
+
+      margin-top: 0.8rem;
+    }
+
+    .form {
+      margin-top: 1.5rem;
+
+      > * + * {
+        margin-top: 1.8rem;
+      }
+
+      .form__block {
+        position: relative;
+
+        display: flex;
+        align-items: center;
+
+        gap: 1rem;
+
+        ::placeholder {
+          font-size: 1.8rem;
+
+          font-weight: 500;
+
+          color: var(--color-title);
+
+          opacity: 1;
+        }
+
+        &:has(:valid) {
+          --color-border: var(--color-valid);
+        }
+
+        &:has(:invalid) {
+          --color-border: var(--color-invalid);
+        }
+
+        &:has(:focus) {
+          --color-border: var(--color-focus);
+        }
+
+        input:not(#checkbox) {
+          width: 100%;
+          height: fit-content;
+
+          padding: 2.6rem 2.5rem;
+
+          color: var(--color-border, transparent);
+          background-color: var(--color-input);
+
+          border-radius: 0.625rem;
+        }
+
+        input:not(#checkbox):focus ~ label,
+        input:not(#checkbox):valid ~ label {
+          top: 1.2rem;
+          left: 0.5rem;
+
+          font-size: 1.6rem;
+
+          opacity: 0.3;
+        }
+
+        #checkbox {
+          all: revert;
+          appearance: none;
+          -moz-appearance: none;
+          -webkit-appearance: none;
+          -o-appearance: none;
+          width: 2rem;
+          height: 2rem;
+
+          background-color: transparent;
+          border: 2px solid var(--color-checkbox);
+          border-radius: 0.4rem;
+
+          cursor: pointer;
+
+          + label {
+            font-size: 1.8rem;
+            letter-spacing: 0.01em;
+          }
+        }
+
+        #checkbox:checked {
+          appearance: auto;
+        }
+
+        a {
+          all: revert;
+
+          margin-top: 0.5rem;
+          text-decoration: none;
+          letter-spacing: 0.01em;
+
+          color: var(--color-btn-bg);
+        }
+      }
+
+      .form__block:nth-child(2) {
+        margin-top: 0.4rem;
+      }
+
+      .form__block--checkbox {
+        margin-top: 2.6rem;
+      }
+
+      .form__btns {
+        display: flex;
+        flex-direction: column;
+
+        .btn--in,
+        .btn--reg {
+          display: block;
+          width: calc(100% - var(--paddingInline));
+
+          padding: 2.2rem 2rem;
+
+          font-weight: 500;
+          text-align: center;
+          letter-spacing: 0.01em;
+
+          border: 1px solid var(--color-btn-bg);
+          border-radius: 0.4rem;
+
+          z-index: 1;
+
+          &:before {
+            left: 0;
+            rotate: 0deg;
+            z-index: -1;
+          }
+        }
+
+        .btn--reg {
+          margin-top: 0.4rem;
+
+          color: var(--color-btn-bg);
+          background-color: var(--color-bg);
+
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: var(--color-bg);
+          }
+        }
+      }
+    }
   }
 }
 
@@ -199,7 +420,21 @@ select {
     .page__content {
       --padding-left: 2.4rem;
 
+      gap: 2.3rem;
+
       padding: var(--padding-left);
+
+      .btn {
+        --btn-width: 23rem;
+
+        gap: 0;
+        margin-top: 0;
+        padding: 0.7rem 1.5rem;
+      }
+    }
+
+    .page__subtitle {
+      width: 100%;
     }
   }
 }
@@ -208,5 +443,12 @@ select {
   .page {
     --paddingBlock: 1.4rem;
     --paddingInline: 2.4rem;
+
+    .page__content {
+      .btn {
+        --btn-width: 25rem;
+        gap: 2rem;
+      }
+    }
   }
 }

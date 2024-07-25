@@ -13,6 +13,10 @@
       href="https://unpkg.com/css.gg@2.0.0/icons/css/arrow-top-right.css"
       rel="stylesheet"
     />
+    <link
+      href="https://unpkg.com/css.gg@2.0.0/icons/css/close.css"
+      rel="stylesheet"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>webernetic-demo</title>
   </head>
@@ -25,7 +29,64 @@
           менее 2500 средних и малых проектов. Используя знания и накопленный
           опыт, мы можем предложить...
         </p>
-        <button class="btn" type="button">
+        <div id="modal" class="modal" popover="manual">
+          <button
+            class="modal__btn"
+            type="button"
+            popovertarget="modal"
+            popovertargetaction="hide"
+          >
+            <i class="gg-close"></i>
+          </button>
+          <h3>Войти в систему</h3>
+          <form class="form">
+            <div class="form__block">
+              <input
+                type="email"
+                id="email"
+                placeholder="Email/Телефон"
+                title="Must be a valid"
+                pattern="[a-zA-Z1-9]+@[a-zA-Z1-9]+\.[a-zA-Z]{2,}"
+                required
+              />
+              <label for="email"></label>
+            </div>
+            <div class="form__block">
+              <input
+                type="password"
+                id="password"
+                title="Пароль должен содержать минимум 8 символов (как минимум одна буква, одна цифра и один специальный символ)"
+                placeholder="Пароль"
+                pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+                required
+              />
+              <label for="password"></label>
+            </div>
+            <div class="form__block form__block--checkbox">
+              <input type="checkbox" id="checkbox" name="checkbox" />
+              <label for="checkbox">Запомнить пароль</label>
+            </div>
+            <div class="form__block">
+              <a
+                href="https://media.licdn.com/dms/image/D5622AQERLiggNaH0dw/feedshare-shrink_2048_1536/0/1679628552703?e=2147483647&v=beta&t=V0QV5bB8AmpWEBEhXgPF-DViOtswBg9D8n0k6KXx21E"
+                target="_blank"
+                >Восстановить</a
+              >
+            </div>
+            <div class="form__btns">
+              <button class="btn btn--in">Войти</button>
+              <button class="btn btn--reg" type="submit">
+                Зарегистрироваться
+              </button>
+            </div>
+          </form>
+        </div>
+        <button
+          class="btn"
+          type="button"
+          popovertarget="modal"
+          popovertargetaction="show"
+        >
           <h3>Попробовать бесплатно</h3>
           <div><i class="gg-arrow-top-right"></i></div>
         </button>
