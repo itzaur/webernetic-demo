@@ -4,8 +4,6 @@ import {
   OrbitControls,
   DRACOLoader,
 } from 'three/examples/jsm/Addons.js';
-import fragmentShader from './shaders/fragmentShader.glsl';
-import vertexShader from './shaders/vertexShader.glsl';
 import * as dat from 'lil-gui';
 
 export default class Experience {
@@ -52,7 +50,7 @@ export default class Experience {
       0.1,
       1000
     );
-    this.camera.position.set(2, 2, 2);
+    this.camera.position.set(2, 1.5, 2);
   }
 
   createLights() {
@@ -118,7 +116,7 @@ export default class Experience {
     this.mesh = new THREE.Mesh(this.geometry, this.material);
     this.mesh.rotation.x = -1.86;
     this.mesh.rotation.y = -0.204;
-    this.mesh.position.y = 0.06;
+    this.mesh.position.y = -0.44;
     this.mesh.position.z = -0.4;
     this.mesh.receiveShadow = true;
 
@@ -152,8 +150,8 @@ export default class Experience {
 
     return new Promise((resolve) => {
       gltfLoader.load('/src/models/model.glb', (gltf) => {
-        gltf.scene.scale.set(0.12, 0.12, 0.12);
-        gltf.scene.position.set(0.438, 0.275, 0);
+        gltf.scene.scale.set(0.125, 0.125, 0.125);
+        gltf.scene.position.set(0.438, -0.225, 0);
         gltf.scene.rotation.set(-0.334, 0.207, 0.207);
         gltf.scene.castShadow = true;
         gltf.scene.receiveShadow = true;
@@ -194,13 +192,6 @@ export default class Experience {
         gltf.scene.children[17].position.z = 3.69;
 
         this.gui
-          .add(gltf.scene.rotation, 'y')
-          .min(-Math.PI)
-          .max(Math.PI)
-          .step(0.001)
-          .name('rotationY');
-
-        this.gui
           .add(gltf.scene.children[17].material, 'metalness')
           .min(0)
           .max(1)
@@ -220,6 +211,13 @@ export default class Experience {
           .max(Math.PI)
           .step(0.001)
           .name('rotationX');
+
+        this.gui
+          .add(gltf.scene.rotation, 'y')
+          .min(-Math.PI)
+          .max(Math.PI)
+          .step(0.001)
+          .name('rotationY');
 
         this.gui
           .add(gltf.scene.rotation, 'z')
@@ -283,7 +281,7 @@ export default class Experience {
   addGUI() {
     this.gui = new dat.GUI();
     this.gui.open(false);
-    // this.gui.hide();
+    this.gui.hide();
 
     this.gui
       .add(this.mesh.position, 'y')
@@ -305,6 +303,7 @@ export default class Experience {
       .max(Math.PI)
       .step(0.01)
       .name('rotationPlaneX');
+
     this.gui
       .add(this.mesh.rotation, 'y')
       .min(-Math.PI)
@@ -339,6 +338,7 @@ export default class Experience {
       .onChange(() => {
         this.material.needsUpdate = true;
       });
+
     this.gui
       .addColor(this.material, 'emissive')
       .name('colorEm')
